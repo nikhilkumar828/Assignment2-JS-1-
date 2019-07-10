@@ -75,12 +75,12 @@ var categories=["All","BCC","IndiaToday","Republic","TV9","CNN","FoxNews"];
 
 function setData() {
     document.getElementById("postImageId").src = data[0].imageSrc;
-    document.getElementById("postTitleId").innerHTML = data[0].postTitle;
-     document.getElementById("postTitleDescId").innerHTML = data[0].postCategory;
-    document.getElementById("postDescId").innerHTML = data[0].postDesc;
+    document.getElementById("postTitleId1").innerHTML = data[0].postTitle;
+     document.getElementById("postTitleDescId1").innerHTML = data[0].postCategory;
+    document.getElementById("postDescId1").innerHTML = data[0].postDesc;
     for (var entries = 1; entries < data.length; entries++) {
         var elmnt = document.getElementById("post1");
-        var clone = elmnt.cloneNode(true);
+        var clone = elmnt.cloneNode(true,true);
         clone.id = "post" + (entries + 1);
         document.getElementById("content").appendChild(clone);
         var cloneChild = document.getElementById("post" + (entries + 1)).childNodes;
@@ -88,7 +88,8 @@ function setData() {
         cloneChild[0].id = "postImageId" + (entries + 1);
         var postChilds = cloneChild[1].childNodes;
         for (var postIdChanges = 0; postIdChanges < postChilds.length; postIdChanges++) {
-            postChilds[postIdChanges].id = postChilds[postIdChanges].id + (entries + 1);
+            var postId = postChilds[postIdChanges].id;
+            postChilds[postIdChanges].id = postId.substr(0,postId.length-1) + (entries + 1);
         }
 
         document.getElementById("postImageId" + (entries + 1)).src = data[entries].imageSrc;
@@ -166,23 +167,24 @@ div.className = "marginForPost";
 document.getElementById("post1").appendChild(div);
 ////
 div = document.createElement('h2');
-div.id = "postTitleId"
+div.id = "postTitleId1"
 document.getElementById("postContent").appendChild(div);
 
 div = document.createElement('h6');
-div.id = "postTitleDescId"
+div.id = "postTitleDescId1"
 div.className = "spacingWithInPosts";
 document.getElementById("postContent").appendChild(div);
 
 div = document.createElement('p');
-div.id = "postDescId"
+div.id = "postDescId1"
 div.className = "spacingWithInPosts";
 document.getElementById("postContent").appendChild(div);
 
 div = document.createElement('button');
-div.id = "postContinueBtnId"
+div.id = "postContinueBtnId1"
 div.innerHTML = "Continue Reading";
 div.className = "postButton spacingWithInPosts";
+div.addEventListener("click",continueReading);
 document.getElementById("postContent").appendChild(div);
 
 // div = document.createElement('div');
@@ -303,12 +305,27 @@ function submitEmail(){
     let mailId = document.getElementById("emailIdTextBox").value;
     var re = /\S+@\S+\.\S+/;
     if(re.test(mailId)){
+        if(localStorage.mailId){
         localStorage.setItem('mailId', JSON.stringify(mailId));
         document.getElementById("emailIdTextBox").value="";
-
+        }
     }
     else{
         alert("Enter Valid Email address");
     }
     
+}
+
+
+function continueReading(){
+
+    var btnId = this.id;
+    var postId = btnId.substr(btnId.length-1);
+    var title = document.getElementById("postTitleId"+postId).textContent;
+    var titleDesc = document.getElementById("postTitleDescId"+postId).textContent;
+    var desc = document.getElementById("postDescId"+postId).textContent;
+
+    var content = title + "\n\n" + titleDesc + "\n\n" + desc + "\n";
+    alert(content);
+
 }
