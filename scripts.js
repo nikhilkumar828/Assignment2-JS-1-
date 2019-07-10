@@ -184,6 +184,15 @@ div.id = "postContinueBtnId"
 div.innerHTML = "Continue Reading";
 div.className = "postButton spacingWithInPosts";
 document.getElementById("postContent").appendChild(div);
+
+// div = document.createElement('div');
+//     div.innerHTML="<br>";
+//     document.getElementById("post1").appendChild(div);
+
+// div = document.createElement('hr');
+// div.className = "divideLine";
+// document.getElementById("post1").appendChild(div);
+
 addSidePanel();
 
 
