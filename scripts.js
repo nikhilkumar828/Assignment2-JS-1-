@@ -78,6 +78,25 @@ var categories = ["All", "BCC", "IndiaToday", "Republic", "TV9", "CNN", "FoxNews
 
 //Creation part
 
+//Create Function to create respective element
+function createHTMLElement(element, elementId, styleClass, parentElement, HTMLTextOfElement, event, eventFunction) {
+    let div = document.createElement(element);
+    if (styleClass) {
+        div.className = styleClass;
+    }
+    if (elementId) {
+        div.id = elementId;
+    }
+    if (HTMLTextOfElement) {
+        div.innerHTML = HTMLTextOfElement;
+    }
+    if (event) {
+        div.addEventListener(event, eventFunction);
+    }
+    document.getElementById(parentElement).appendChild(div);
+}
+
+
 //Creates the elements required for the page and adds them
 function create() {
     //Adding Header Panel    
@@ -87,7 +106,7 @@ function create() {
     //Adding Footer Panel
     addFooter();
     //Setting data to the elements
-    setData();
+    setData(data);
 }
 
 
@@ -95,99 +114,30 @@ function create() {
 function addHeader() {
 
     //Creating and appending div tag
-    var div = document.createElement('div');
-    div.className = "titleMain";
-    div.id = "titleContainer";
-    document.getElementById("headerTitle").appendChild(div);
+    createHTMLElement('div', 'titleContainer', 'titleMain', 'headerTitle', '', '', '');
 
     //Creating and appending h2 tag
-    div = document.createElement('h2');
-    div.className = "titleHeading";
-    div.innerHTML = "NEWSFEED";
-    document.getElementById("titleContainer").appendChild(div);
+    createHTMLElement('h2', '', 'titleHeading', 'titleContainer', 'NEWSFEED', '', '');
 
     //Creating and appending h6 tag
-    div = document.createElement('h6');
-    div.className = "titleDesc";
-    div.innerHTML = "<i>Yet another newsfeed</i>";
-    document.getElementById("titleContainer").appendChild(div);
+    createHTMLElement('h6', '', 'titleDesc', 'titleContainer', '<i>Yet another newsfeed</i>', '', '');
 }
 
 //Body
 function addMain() {
 
     //Creating and appending div tag
-    var div = document.createElement('div');
-    div.id = "mainContainer"
-    div.className = "flxRow";
-    document.getElementById("wrapper").appendChild(div);
+    createHTMLElement('div', 'mainContainer', 'flxRow', 'wrapper', '', '', '');
 
     //Adding popup to be displayed on click of continue reading button
     addPopUp();
 
     //Creating and appending div tag
-    div = document.createElement('div');
-    div.id = "content"
-    div.className = "flxColumn allPosts";
-    document.getElementById("mainContainer").appendChild(div);
+    createHTMLElement('div', 'content', 'flxColumn allPosts', 'mainContainer', '', '', '');
 
     //Creating and appending div tag
-    div = document.createElement('div');
-    div.className = "sidePanelStyle";
-    div.id = "sidePanel"
-    document.getElementById("mainContainer").appendChild(div);
+    createHTMLElement('div', 'sidePanel', 'sidePanelStyle', 'mainContainer', '', '', '');
 
-    //Creating and appending div tag
-    div = document.createElement('div');
-    div.id = "post1"
-    div.className = "flxRow allPosts";
-    document.getElementById("content").appendChild(div);
-
-    //Creating and appending hr tag
-    div = document.createElement('hr');
-    div.id = "postDivisionLine1";
-    div.className = "divideLine";
-    document.getElementById("content").appendChild(div);
-
-    //Creating and appending img tag
-    div = document.createElement('img');
-    div.id = "postImageId"
-    div.className = "postImage";
-    document.getElementById("post1").appendChild(div);
-
-    //Creating and appending div tag
-    div = document.createElement('div');
-    div.id = "postContent"
-    div.className = "marginForPost";
-    document.getElementById("post1").appendChild(div);
-    
-    //Creation of elements inside the postContent 
-
-    //Creating and appending h2 tag to display Post Title
-    div = document.createElement('h2');
-    div.id = "postTitleId1"
-    document.getElementById("postContent").appendChild(div);
-
-    //Creating and appending h6 tag to display category and date of post
-    div = document.createElement('h6');
-    div.id = "postTitleDescId1"
-    div.className = "spacingWithInPosts";
-    document.getElementById("postContent").appendChild(div);
-
-    //Creating and appending p tag to display post description
-    div = document.createElement('p');
-    div.id = "postDescId1"
-    div.className = "spacingWithInPosts";
-    document.getElementById("postContent").appendChild(div);
-
-    //Creating and appending button tag for displaying popup
-    div = document.createElement('button');
-    div.id = "postContinueBtnId1"
-    div.innerHTML = "Continue Reading";
-    div.className = "postButton spacingWithInPosts";
-    //adding eventlistener for onClick event of button to display popup
-    div.addEventListener("click", continueReading);
-    document.getElementById("postContent").appendChild(div);
 
     //creation of side panel for adding select category and subscription
     addSidePanel();
@@ -197,18 +147,11 @@ function addMain() {
 function addSidePanel() {
 
     //Creating and appending h3 tag
-    div = document.createElement('h3');
-    div.innerHTML = "Select Category";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('h3', '', '', 'sidePanel', 'Select Category', '', '');
 
     //ListBox Creation
     //Creating and appending select tag for displaying listBox
-    div = document.createElement('select');
-    div.id = "categoryLstBox";
-    div.className = "lstBox";
-    //EventListener for change of selection in listBox
-    div.addEventListener("change", listBoxSelection);
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('select', 'categoryLstBox', 'lstBox', 'sidePanel', '&copy; NewsFeed 2019', 'change', listBoxSelection);
 
     //Creating and appending option tag for displaying categories
     for (var allCategories = 0; allCategories < categories.length; allCategories++) {
@@ -221,141 +164,98 @@ function addSidePanel() {
     }
 
     //Creating and appending div tag 
-    div = document.createElement('div');
-    div.innerHTML = "<br><br>";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('div', '', '', 'sidePanel', '<br><br>', '', '');
 
     //Subscribe
     //Creating and appending h3 tag
-    div = document.createElement('h3');
-    div.innerHTML = "Subscribe<br><br>";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('h3', '', '', 'sidePanel', 'Subscribe<br><br>', '', '');
 
     //Email
     //Creating and appending form tag for displaying textBox to enter mail 
-    div = document.createElement('form');
-    div.id = "emailIdAction";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('form', 'emailIdAction', '', 'sidePanel', '', '', '');
     document.getElementById("emailIdAction").action = "#";
 
     //Creating and appending h5 tag
-    div = document.createElement('h5');
-    div.innerHTML = "Email Id:<br>";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('h5', '', '', 'sidePanel', 'Email Id:<br>', '', '');
 
     //Creating and appending input tag
-    div = document.createElement('input');
-    div.id = "emailIdTextBox";
-    div.className = "txtBoxMeasures";
-    div.placeHoler = "EmailAddress";
-    div.type = "text";
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('input', 'emailIdTextBox', 'txtBoxMeasures', 'sidePanel', '', '', '');
+    var thisElement = document.getElementById("emailIdTextBox");
+    thisElement.placeHoler = "EmailAddress";
+    thisElement.type = "text";
 
     //Submit Email
     //Creating and appending input tag to create button for submision of mail
-    div = document.createElement('input');
-    div.id = "emailIdSubmitBtn";
-    div.className = "btnSubscribe";
-    div.value = "Subscribe";
-    div.type = "submit";
-    //eventlistener to submit mailId on click of button
-    div.addEventListener("click", submitEmail);
-    document.getElementById("sidePanel").appendChild(div);
+    createHTMLElement('input', 'emailIdSubmitBtn', 'btnSubscribe', 'sidePanel', '', 'click', submitEmail);
+    thisElement = document.getElementById("emailIdSubmitBtn");
+    thisElement.value = "Subscribe";
+    thisElement.type = "submit";
 }
 
 //Footer
 function addFooter() {
 
     //Creating and appending div tag
-    var div = document.createElement('div');
-    div.innerHTML = "<br>"
-    document.getElementById("wrapper").appendChild(div);
-    document.getElementById("footerTitle").className = "footerContent";
+    createHTMLElement('div', '', '', 'wrapper', '<br>', '', '');
 
     //Creating and appending div tag for footer content
-    var div = document.createElement('div');
-    div.className = "marginForFooterContent";
-    div.innerHTML = "&copy; NewsFeed 2019";
-    document.getElementById("footerTitle").appendChild(div);
+    createHTMLElement('div', '', 'marginForFooterContent', 'footerTitle', '&copy; NewsFeed 2019', '', '');
+}
+
+function createPost(postNumber, dataArray) {
+
+    //Creating and appending div tag
+    createHTMLElement('div', 'post' + postNumber, 'flxRow allPosts', 'content', '', '', '');
+
+    //Creating and appending hr tag
+    createHTMLElement('hr', 'postDivisionLine1' + postNumber, 'divideLine', 'content', '', '', '');
+
+    //Creating and appending img tag
+    createHTMLElement('img', 'postImageId' + postNumber, 'postImage', 'post' + postNumber, '', '', '');
+    document.getElementById("postImageId" + postNumber).src = dataArray[postNumber - 1].imageSrc;
+
+    //Creating and appending div tag
+    createHTMLElement('div', 'postContent' + postNumber, 'marginForPost', 'post' + postNumber, '', '', '');
+
+    //Creation of elements inside the postContent 
+    //Creating and appending h2 tag to display Post Title
+    createHTMLElement('h2', 'postTitleId' + postNumber, '', 'postContent' + postNumber, dataArray[postNumber - 1].postTitle, '', '');
+
+    //Creating and appending h6 tag to display category and date of post
+    var titleDescData = "<span class=fontLight>Posted on </span>" + dataArray[postNumber - 1].postDate + "<span class=fontLight>// Category :</span> " + dataArray[postNumber - 1].postCategory;
+    createHTMLElement('h6', 'postTitleDescId' + postNumber, 'spacingWithInPosts', 'postContent' + postNumber, titleDescData, '', '');
+    document.getElementById("postTitleDescId" + postNumber).value = dataArray[postNumber - 1].postCategory;
+
+    //Creating and appending p tag to display post description
+    createHTMLElement('p', 'postDescId' + postNumber, 'spacingWithInPosts', 'postContent' + postNumber, dataArray[postNumber - 1].postDesc, '', '');
+    //Creating and appending button tag for displaying popup
+    createHTMLElement('button', 'postContinueBtnId' + postNumber, 'postButton spacingWithInPosts', 'postContent' + postNumber, 'Continue Reading', 'click', continueReading);
+
+
 }
 
 //Setting data and cloning for more posts
-function setData() {
+function setData(dataToSet) {
 
-    //setting data for first post
-    document.getElementById("postImageId").src = data[0].imageSrc;
-    document.getElementById("postTitleId1").innerHTML = data[0].postTitle;
-    document.getElementById("postTitleDescId1").innerHTML = data[0].postCategory;
-    var titleDescData = "<span class=fontLight>Posted on </span>" + data[0].postDate + "<span class=fontLight>// Category :</span> " + data[0].postCategory;
-    document.getElementById("postTitleDescId1").innerHTML = titleDescData;
-    document.getElementById("postTitleDescId1").value = data[0].postCategory;
-    document.getElementById("postDescId1").innerHTML = data[0].postDesc;
-
-    //Traversing through different data elements and creating clone of posts to set data
-    for (var entries = 1; entries < data.length; entries++) {
-        
-        //cloning node
-        var elmnt = document.getElementById("post1");
-        var clone = elmnt.cloneNode(true, true);
-        clone.id = "post" + (entries + 1);
-        document.getElementById("content").appendChild(clone);
-        var cloneChild = document.getElementById("post" + (entries + 1)).childNodes;
-        cloneChild[0].id = "postImageId" + (entries + 1);
-        
-        //Changing ID's for the posts created for accesing uniquely
-        var postChilds = cloneChild[1].childNodes;
-        for (var postIdChanges = 0; postIdChanges < postChilds.length; postIdChanges++) {
-            var postId = postChilds[postIdChanges].id;
-            postChilds[postIdChanges].id = postId.substr(0, postId.length - 1) + (entries + 1);
-        }
-
-        //setting data for the clonned elements
-        document.getElementById("postImageId" + (entries + 1)).src = data[entries].imageSrc;
-        document.getElementById("postTitleId" + (entries + 1)).innerHTML = data[entries].postTitle;
-        document.getElementById("postTitleDescId" + (entries + 1)).value = data[entries].postCategory;
-        var titleDescData = "<span class=fontLight>Posted on </span>" + data[entries].postDate + "<span class=fontLight>// Category :</span> " + data[entries].postCategory;
-        document.getElementById("postTitleDescId" + (entries + 1)).innerHTML = titleDescData;
-        document.getElementById("postDescId" + (entries + 1)).innerHTML = data[entries].postDesc;
-
-        //adding eventlistener for clonner continue reading button 
-        document.getElementById("postContinueBtnId" + (entries + 1)).addEventListener("click", continueReading);
-
-        //adding horizontal rule for division of posts
-        var elmnt = document.getElementById("postDivisionLine1");
-        var clone = elmnt.cloneNode(true);
-        clone.id = "postDivisionLine" + (entries + 1);
-        document.getElementById("content").appendChild(clone);
+    for (let entries = 0; entries < dataToSet.length; entries++) {
+        createPost(entries + 1, dataToSet);
     }
 }
 
 //to create popup related html elements
 function addPopUp() {
 
-    //Creation of div tag  
-    var div = document.createElement('div');
-    div.id = "popUp"
-    div.className = "modal";
-    document.getElementById("wrapper").appendChild(div);
+    //Creation of div tag
+    createHTMLElement('div', 'popUp', 'modal', 'wrapper', '', '', '');
 
     //Creation of div tag
-    var div = document.createElement('div');
-    div.id = "popUpContent"
-    div.className = "modal-content";
-    document.getElementById("popUp").appendChild(div);
+    createHTMLElement('div', 'popUpContent', 'modal-content', 'popUp', '', '', '');
 
     //Creation of span tag for close symbol
-    var div = document.createElement('span');
-    div.id = "closeBtn"
-    div.className = "close";
-    div.innerHTML = "&times;";
-    //adding event to click of close
-    div.addEventListener("click", popUpCloseBtn);
-    document.getElementById("popUpContent").appendChild(div);
+    createHTMLElement('span', 'closeBtn', 'close', 'popUpContent', '&times;', 'click', popUpCloseBtn);
 
     //Creation of p tag to display content
-    var div = document.createElement('p');
-    div.id = "contentDisplayArea"
-    document.getElementById("popUpContent").appendChild(div);
+    createHTMLElement('p', 'contentDisplayArea', '', 'popUpContent', '', '', '');
 
 }
 
@@ -366,43 +266,47 @@ function addPopUp() {
 //List Box Selection Event
 function listBoxSelection() {
 
+    var selectedData;
     //Getting value selected by user
-    var listBox = document.getElementById("categoryLstBox");
+    let listBox = document.getElementById("categoryLstBox");
     let selectedValue = listBox.value;
 
-    //Traversing through all the post and hiding the posts which are different than selected category
-    var posts = document.getElementById("content").childNodes;
-    for (var eachPost = 0; eachPost < posts.length; eachPost += 2) {
-        if (selectedValue != 0) {
-            if (posts[eachPost].childNodes[1].childNodes[1].value != categories[selectedValue]) {
-                document.getElementById("post" + ((eachPost / 2) + 1)).style.display = "none";
-                document.getElementById("postDivisionLine" + ((eachPost / 2) + 1)).style.display = "none";
-            }
-            else {
-                document.getElementById("post" + ((eachPost / 2) + 1)).style.display = "flex";
-                document.getElementById("postDivisionLine" + ((eachPost / 2) + 1)).style.display = "flex";
-            }
-        }
-        else {
-            document.getElementById("post" + ((eachPost / 2) + 1)).style.display = "flex";
-            document.getElementById("postDivisionLine" + ((eachPost / 2) + 1)).style.display = "flex";
-        }
+    var myNode = document.getElementById("content");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
     }
+
+    if (selectedValue != 0) {
+        selectedData = data.filter(function (el) {
+            return el.postCategory == categories[selectedValue];
+        });
+
+    } else {
+        selectedData = data;
+    }
+
+    setData(selectedData);
+
+
 }
 
 //Email submit event
 function submitEmail() {
+    var arrayOfMailId = [];
     //getting the mailId entered
     let mailId = document.getElementById("emailIdTextBox").value;
     //Regular Expression for email Id
     var re = /\S+@\S+\.\S+/;
     //If mailId is valid then store else show alert
     if (re.test(mailId)) {
-        if (localStorage.mailId) {
-            //Storing mailId to localStorage
-            localStorage.setItem('mailId', JSON.stringify(mailId));
-            document.getElementById("emailIdTextBox").value = "";
+        var ids = localStorage.getItem("mailId");
+        if (ids) {
+            arrayOfMailId = ids.split(',');
         }
+        //Storing mailId to localStorage
+        arrayOfMailId.push(mailId);
+        localStorage.setItem('mailId', JSON.stringify(arrayOfMailId));
+        document.getElementById("emailIdTextBox").value = "";
     }
     else {
         alert("Enter Valid Email address");
