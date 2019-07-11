@@ -305,7 +305,7 @@ function submitEmail() {
         }
         //Storing mailId to localStorage
         arrayOfMailId.push(mailId);
-        localStorage.setItem('mailId', JSON.stringify(arrayOfMailId));
+        localStorage.setItem('mailId', arrayOfMailId);
         document.getElementById("emailIdTextBox").value = "";
     }
     else {
