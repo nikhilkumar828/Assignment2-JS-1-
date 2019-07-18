@@ -1,0 +1,35 @@
+We can add all html elements through the javascript code 
+ 
+Write comments always  
+ 
+Never hardcore variables 
+ 
+Use let and constant wherever you can 
+ 
+Use resuable code 
+ 
+While adding data to local storage make sure the present content is not lost 
+ 
+For cloning - https://www.w3schools.com/jsref/met_node_clonenode.asp 
+ 
+Instead of cloning we can create a structure and use that structure when needed 
+ 
+DOMEvents - https://www.w3schools.com/js/js_htmldom_events.asp 
+ 
+Java Script coding standard : https://github.com/airbnb/javascript 
+ 
+ 
+ 
+ 
+https://www.sitepoint.com/5-common-javascript-myths/ - myths  
+ 
+ 
+ 
+//////////////////////// 
+ 
+['1', '7', '11'].map(parseInt); 
+ 
+[1,Nan,3] 
+ 
+Sol. ['1', '7', '11'].map(numStr => parseInt(numStr)); 
+   
